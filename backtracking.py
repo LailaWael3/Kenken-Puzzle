@@ -6,7 +6,6 @@ class CSP ():
         self.domains = domains
         self.neighbors = neighbors
         self.constraints = constraints
-        self.initial = ()
         self.curr_domains = None
         self.nassigns = 0
 
@@ -115,29 +114,27 @@ def forward_checking(csp, var, value, assignment, removals):
 
 
 
-def revise(csp, Xi, Xj, removals):
+def remove_incosistant_values(csp, Xi, Xj, removals):
     """Return true if we remove a value."""
-    revised = False
+    removed = False
     for x in csp.curr_domains[Xi][:]:
-        # If Xi=x conflicts with Xj=y for every possible y, eliminate Xi=x
         if all(not csp.constraints(Xi, x, Xj, y) for y in csp.curr_domains[Xj]):
             csp.prune(Xi, x, removals)
-            revised = True
-    return revised
+            removed = True
+    return removed
 
 def mac(csp, var, value, assignment, removals):
     """Maintain arc consistency."""
     return AC3(csp, [(X, var) for X in csp.neighbors[var]], removals)
 
 
-def AC3(csp, queue=None, removals=None):
+def AC3(csp, var, value, assignment, removals):
     """[Figure 6.3]"""
-    if queue is None:
-        queue = [(Xi, Xk) for Xi in csp.variables for Xk in csp.neighbors[Xi]]
+    queue = [(Xi, Xk) for Xi in csp.variables for Xk in csp.neighbors[Xi]]
     csp.support_pruning()
     while queue:
         (Xi, Xj) = queue.pop()
-        if revise(csp, Xi, Xj, removals):
+        if remove_incosistant_values(csp, Xi, Xj, removals):
             if not csp.curr_domains[Xi]:
                 return False
             for Xk in csp.neighbors[Xi]:
