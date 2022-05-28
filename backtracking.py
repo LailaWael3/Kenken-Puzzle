@@ -123,10 +123,6 @@ def remove_incosistant_values(csp, Xi, Xj, removals):
             removed = True
     return removed
 
-def mac(csp, var, value, assignment, removals):
-    """Maintain arc consistency."""
-    return AC3(csp, [(X, var) for X in csp.neighbors[var]], removals)
-
 
 def AC3(csp, var, value, assignment, removals):
     """[Figure 6.3]"""

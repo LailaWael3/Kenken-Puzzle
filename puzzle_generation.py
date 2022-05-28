@@ -238,24 +238,8 @@ class Kenken(backtracking.CSP):
 
         backtracking.CSP.__init__(self, variables, domains, neighbors, self.constraint)
 
-        self.size = size
-
         # Used in benchmarking
         self.checks = 0
-
-        # Used in displaying
-        self.padding = 0
-
-        self.meta = {}
-        for members, operator, target in cliques:
-            self.meta[members] = (operator, target)
-            self.padding = max(self.padding, len(str(target)))        
-
-    # def nconflicts(self, var, val, assignment):
-
-    # def assign(self, var, val, assignment):
-
-    # def unassign(self, var, assignment):
 
     def constraint(self, A, a, B, b):
         """
@@ -268,60 +252,6 @@ class Kenken(backtracking.CSP):
 
         return A == B or not conflicting(A, a, B, b)
 
-    def display(self, assignment):
-        """
-        Print the kenken puzzle in a format easily readable by a human
-        """
-        if assignment:
-            atomic = {}
-            for members in self.variables:
-                values = assignment.get(members)
-
-                if values:
-                    for i in range(len(members)):
-                        atomic[members[i]] = values[i]
-                else:
-                    for member in members:
-                        atomic[member] = None
-        else:
-            atomic = {member:None for members in self.variables for member in members}
-
-        atomic = sorted(atomic.items(), key=lambda item: item[0][1] * self.size + item[0][0])
-
-        padding = lambda c, offset: (c * (self.padding + 2 - offset))
-
-        embrace = lambda inner, beg, end: beg + inner + end
-
-        mentioned = set()
-
-        def meta(member):
-            for var, val in self.meta.items():
-                if member in var and var not in mentioned:
-                    mentioned.add(var)
-                    return str(val[1]) + " " + (val[0] if val[0] != "." else " ")
-
-            return ""
-
-        fit = lambda word: padding(" ", len(word)) + word + padding(" ", 0)
-
-        cpadding = embrace(2 * padding(" ", 0), "|", "") * self.size + "|"
-
-        def show(row):
-
-            rpadding = "".join(["|" + fit(meta(item[0])) for item in row]) + "|"
-
-            data = "".join(["|" + fit(str(item[1] if item[1] else "")) for item in row]) + "|"
-
-            print(rpadding, data, cpadding, sep="\n")
-
-        rpadding = embrace(2 * padding("-", 0), "+", "") * self.size + "+"
-
-        print(rpadding)
-        for i in range(1, self.size + 1):
-
-            show(list(filter(lambda item: item[0][1] == i, atomic)))
-
-            print(rpadding)
 
 
     def performance_analysis(self, inference=backtracking.no_inference):
@@ -334,20 +264,3 @@ class Kenken(backtracking.CSP):
         assign = self.nassigns
         time_taken = end - start
         return  time_taken, checks, assign
-
-
-size =3
-if __name__ == "__main__":
-    cliques = generate(size) 
-
-    ken = Kenken(size, cliques)
-
-    # print(cliques)
-
-    assignment = backtracking.backtracking_search(ken, inference=backtracking.forward_checking)
-
-    print (assignment)
-
-    ken.display(assignment) 
-
-    #window = draw(cliques, size)
