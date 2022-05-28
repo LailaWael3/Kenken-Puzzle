@@ -2,6 +2,7 @@ from functools import reduce
 from random import  random, shuffle, randint, choice
 from itertools import product, permutations
 import backtracking
+import time
 
 def operation(operator):
     """
@@ -321,6 +322,18 @@ class Kenken(backtracking.CSP):
             show(list(filter(lambda item: item[0][1] == i, atomic)))
 
             print(rpadding)
+
+
+    def performance_analysis(self, inference=backtracking.no_inference):
+        self.checks = 0
+        self.nassigns = 0
+        start = time.perf_counter()
+        assignment = backtracking.backtracking_search(self, inference)
+        end = time.perf_counter()
+        checks = self.checks
+        assign = self.nassigns
+        time_taken = end - start
+        return  time_taken, checks, assign
 
 
 size =3
