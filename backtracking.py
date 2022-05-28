@@ -64,3 +64,83 @@ class CSP ():
         return (len(assignment) == len(self.variables)
                 and all(self.conflicts(variables, assignment[variables], assignment) == False
                         for variables in self.variables))  
+
+def select_unassigned_variable(assignment, csp):
+    for var in csp.variables :
+        if var not in assignment:
+            return var
+    return None
+
+
+
+def order_domain_values(var, csp):
+    return csp.choices(var)
+
+def no_inference(csp, var, value, assignment, removals):
+    return True
+
+def backtracking_search(csp,inference=no_inference):
+
+    def backtrack(assignment):
+        if len(assignment) == len(csp.variables):
+            return assignment
+        var = select_unassigned_variable(assignment, csp)
+        for value in order_domain_values(var, csp):
+            if csp.conflicts(var, value, assignment) == False:
+                csp.assign(var, value, assignment)
+                removals = csp.suppose(var, value)
+                if inference(csp, var, value, assignment, removals):
+                    result = backtrack(assignment)
+                    if result is not None:
+                        return result
+                csp.restore(removals)
+        csp.unassign(var, assignment)
+        return None
+
+    result = backtrack({})
+    assert result is None or csp.goal_test(result)
+    return result   
+
+def forward_checking(csp, var, value, assignment, removals):
+    """Prune neighbor values inconsistent with var=value."""
+    csp.support_pruning()
+    for B in csp.neighbors[var]:
+        if B not in assignment:
+            for b in csp.curr_domains[B][:]:
+                if not csp.constraints(var, value, B, b):
+                    csp.prune(B, b, removals)
+            if not csp.curr_domains[B]:
+                return False
+    return True
+
+
+
+def revise(csp, Xi, Xj, removals):
+    """Return true if we remove a value."""
+    revised = False
+    for x in csp.curr_domains[Xi][:]:
+        # If Xi=x conflicts with Xj=y for every possible y, eliminate Xi=x
+        if all(not csp.constraints(Xi, x, Xj, y) for y in csp.curr_domains[Xj]):
+            csp.prune(Xi, x, removals)
+            revised = True
+    return revised
+
+def mac(csp, var, value, assignment, removals):
+    """Maintain arc consistency."""
+    return AC3(csp, [(X, var) for X in csp.neighbors[var]], removals)
+
+
+def AC3(csp, queue=None, removals=None):
+    """[Figure 6.3]"""
+    if queue is None:
+        queue = [(Xi, Xk) for Xi in csp.variables for Xk in csp.neighbors[Xi]]
+    csp.support_pruning()
+    while queue:
+        (Xi, Xj) = queue.pop()
+        if revise(csp, Xi, Xj, removals):
+            if not csp.curr_domains[Xi]:
+                return False
+            for Xk in csp.neighbors[Xi]:
+                if Xk != Xj:
+                    queue.append((Xk, Xi))
+    return True
