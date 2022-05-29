@@ -31,7 +31,7 @@ def init_win():
     pygame.display.set_caption("kenken")
     win.fill(background_color)
     image = pygame.image.load(r'download.png')
-    myfont = pygame.font.SysFont('Comic Sans MS', 42)
+    myfont = pygame.font.SysFont('Comic Sans MS', 35)
     button_font = pygame.font.SysFont('Comic Sans MS', 28)
 
     win.fill((255,255,255))
@@ -124,7 +124,7 @@ def draw(cliques, size):
     win_2 = pygame.display.set_mode((1400, WIDTH))
     pygame.display.set_caption("kenken")
     win_2.fill(background_color)
-    myfont = pygame.font.SysFont('Comic Sans MS', 35)
+    myfont = pygame.font.SysFont('Comic Sans MS', 180//size)
     button_font = pygame.font.SysFont('Comic Sans MS', 28)
 
     draw_text('Select Solving', myfont, (0, 0, 0), win_2, 20, 50)
@@ -158,7 +158,7 @@ def draw(cliques, size):
         win_2.blit(value, (( (index[0][0]-1) *w )+455 ,((index[0][1]-1)*w )+55 ))
         if op != '.':
             value = myfont.render(op, True, (0,0,0))
-            win_2.blit(value, ( ( (index[0][0]-1) *w )+455+14*len(str(target)) , ((index[0][1]-1)*w )+55 ))
+            win_2.blit(value, ( ( (index[0][0]-1) *w )+475+ ((6*9)//size)*len(str(target) ) , ((index[0][1]-1)*w )+50 ))
         
     for i in range(size+1):
         pygame.draw.line(win_2, (0,0,0), (450 +w*i, 50), (450 + w*i ,950 ), 2 )
@@ -203,7 +203,7 @@ def draw(cliques, size):
                     for index in assignment:
                         myfont = pygame.font.SysFont('Comic Sans MS', 500//size)
                         value = myfont.render(str(assignments[assignment][i]), True, (0,0,0))
-                        win_2.blit(value, ( ( (index[0]-1) *w )+470+14*len(str(target)) +90//size , (((index[1]-1)*w )+(w//2 +size*4) )))
+                        win_2.blit(value, ( ( (index[0]-1) *w )+470 +90//size , (((index[1]-1)*w )+(w//2) +size)) )
                         i+=1
                 but_pressed=0
 
