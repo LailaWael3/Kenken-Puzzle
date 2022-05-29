@@ -1,3 +1,4 @@
+
 from inspect import trace
 from re import S
 import pygame, sys
@@ -100,8 +101,7 @@ def init_win():
         if button_gen.collidepoint((mx, my)):
             if click[0]:
                 cliques = puzzle_generation.generate(size)
-                ken = puzzle_generation.Kenken(size, cliques)
-                window = draw(cliques, size)
+                draw(cliques, size)
 
         pygame.display.update()
         mainClock.tick(60)
@@ -124,7 +124,7 @@ def draw(cliques, size):
     win_2 = pygame.display.set_mode((1400, WIDTH))
     pygame.display.set_caption("kenken")
     win_2.fill(background_color)
-    myfont = pygame.font.SysFont('Comic Sans MS', 42)
+    myfont = pygame.font.SysFont('Comic Sans MS', 35)
     button_font = pygame.font.SysFont('Comic Sans MS', 28)
 
     draw_text('Select Solving', myfont, (0, 0, 0), win_2, 20, 50)
@@ -155,40 +155,59 @@ def draw(cliques, size):
             shape_surf.set_alpha(100)
             win_2.blit(shape_surf,((450+w*(i[0]-1)) , (50+w*(i[1]-1)) ,w, w) )
         value = myfont.render(str(target), True, (0,0,0))
-        win_2.blit(value, (( (index[0][0]-1) *w )+470 ,((index[0][1]-1)*w )+55 ))
+        win_2.blit(value, (( (index[0][0]-1) *w )+455 ,((index[0][1]-1)*w )+55 ))
         if op != '.':
             value = myfont.render(op, True, (0,0,0))
-            win_2.blit(value, (( (index[0][0]-1) *w )+ 490*len(str(target)) ,((index[0][1]-1)*w )+55 ))
+            win_2.blit(value, ( ( (index[0][0]-1) *w )+455+14*len(str(target)) , ((index[0][1]-1)*w )+55 ))
         
     for i in range(size+1):
         pygame.draw.line(win_2, (0,0,0), (450 +w*i, 50), (450 + w*i ,950 ), 2 )
         pygame.draw.line(win_2, (0,0,0), (450, 50 + w*i), (1350, 50 + w*i), 2 )
     pygame.display.update()
-    
-    while True: 
+    ken = puzzle_generation.Kenken(size, cliques)
+    but_pressed =0 
+    solved=False
+    while True : 
         mx, my = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
         if button_algo1.collidepoint((mx, my)):
-            if click[0]:
-                size = 3
+            if click[0] and  not solved:
                 button_algo1 = pygame.draw.rect(win_2, (0, 0, 0), pygame.Rect(50, 225, 350, 115))
                 draw_text('Backtracking', button_font, (255, 255, 255), win_2, 140, 260)
+                but_pressed =1
         if button_algo2.collidepoint((mx, my)):
-            if click[0]:
-                size = 4
+            if click[0] and not solved:
                 button_algo2 = pygame.draw.rect(win_2, (0, 0, 0), pygame.Rect(50, 375, 350, 115))
                 draw_text('Backtracking with', button_font, (255, 255, 255), win_2, 110, 390)
                 draw_text('forward checking', button_font, (255, 255, 255), win_2, 110, 425)
+                but_pressed =2
         if button_algo3.collidepoint((mx, my)):
-            if click[0]:
-                size = 5
-                button_algo3 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 525, 350, 115))
+            if click[0] and not solved:
+                button_algo3 = pygame.draw.rect(win_2, (0, 0, 0), pygame.Rect(50, 525, 350, 115))
                 draw_text('Backtracking with', button_font, (255, 255, 255), win_2, 110, 540)
                 draw_text('arc consistency', button_font, (255, 255, 255), win_2, 130, 575)
+                but_pressed =3
 
-        # if button_solve.collidepoint((mx, my)):
-        #     if click[0]:
+        if button_solve.collidepoint((mx, my)):
+            if click[0]:
+                if but_pressed ==1:
+                    assignments = backtracking.backtracking_search(ken)
+                elif but_pressed==2:
+                    assignments = backtracking.backtracking_search(ken, inference=backtracking.forward_checking)
+                elif but_pressed==3:
+                    assignments = backtracking.backtracking_search(ken, inference=backtracking.AC3)
+                for assignment in assignments.keys():
+                    i =0 
+                    solved=True
+                    for index in assignment:
+                        myfont = pygame.font.SysFont('Comic Sans MS', 500//size)
+                        value = myfont.render(str(assignments[assignment][i]), True, (0,0,0))
+                        win_2.blit(value, ( ( (index[0]-1) *w )+470+14*len(str(target)) +90//size , (((index[1]-1)*w )+(w//2 +size*4) )))
+                        i+=1
+                but_pressed=0
+
+                
 
 
         pygame.display.update()
@@ -210,20 +229,8 @@ def draw(cliques, size):
                 pygame.quit()
                 return
 
-size =3
 if __name__ == "__main__":
+    size =3
     cliques = puzzle_generation.generate(size) 
-
-    ken = puzzle_generation.Kenken(size, cliques)
-
-    # print(cliques)
-
-    assignment = backtracking.backtracking_search(ken, inference=backtracking.forward_checking)
-
-    #print (assignment)
-
-    #ken.display(assignment) 
-
     init_win()
-    #window = draw(cliques, size)
 
