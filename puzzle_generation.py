@@ -97,12 +97,8 @@ def RowXorCol(xy1, xy2):
 def conflicting(A, a, B, b):
     for i in range(len(A)):
         for j in range(len(B)):
-            mA = A[i]
-            mB = B[j]
-
-            ma = a[i]
-            mb = b[j]
-            if RowXorCol(mA, mB) and ma == mb:
+            
+            if RowXorCol(A[i], B[j]) and a[i] == b[j]:
                 return True
 
     return False
