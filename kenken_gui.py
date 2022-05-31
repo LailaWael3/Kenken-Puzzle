@@ -1,6 +1,7 @@
 
 from inspect import trace
 from re import S
+from cv2 import solve
 import pygame, sys
 import puzzle_generation
 from random import randint
@@ -64,42 +65,162 @@ def init_win():
 
         if button_1.collidepoint((mx, my)):
             if click[0]:
+                button_1 = pygame.draw.ellipse(win, (189, 15, 111), pygame.Rect(50, 455, 150, 75))
+                button_2 = pygame.draw.ellipse(win, (7, 168, 20), pygame.Rect(300, 455, 150, 75))
+                button_3 = pygame.draw.ellipse(win, (10, 73, 145), pygame.Rect(550, 455, 150, 75))
+                button_4 = pygame.draw.ellipse(win, (45, 130, 227), pygame.Rect(800, 455, 150, 75))
+                button_5 = pygame.draw.ellipse(win, (212, 205, 4), pygame.Rect(175, 555, 150, 75))
+                button_6 = pygame.draw.ellipse(win, (227, 144, 20), pygame.Rect(425, 555, 150, 75))
+                button_7 = pygame.draw.ellipse(win, (181, 30, 16), pygame.Rect(675, 555, 150, 75))
+
+                draw_text('3x3', button_font, (255, 255, 255), win, 100, 470)
+                draw_text('4x4', button_font, (255, 255, 255), win, 350, 470)
+                draw_text('5x5', button_font, (255, 255, 255), win, 600, 470)
+                draw_text('6x6', button_font, (255, 255, 255), win, 850, 470)
+                draw_text('7x7', button_font, (255, 255, 255), win, 225, 570)
+                draw_text('8x8', button_font, (255, 255, 255), win, 475, 570)
+                draw_text('9x9', button_font, (255, 255, 255), win, 725, 570)
                 size = 3
                 button_1 = pygame.draw.ellipse(win, (0, 0, 0), pygame.Rect(50, 455, 150, 75))
                 draw_text('3x3', button_font, (255, 255, 255), win, 100, 470)
         if button_2.collidepoint((mx, my)):
             if click[0]:
+                button_1 = pygame.draw.ellipse(win, (189, 15, 111), pygame.Rect(50, 455, 150, 75))
+                button_2 = pygame.draw.ellipse(win, (7, 168, 20), pygame.Rect(300, 455, 150, 75))
+                button_3 = pygame.draw.ellipse(win, (10, 73, 145), pygame.Rect(550, 455, 150, 75))
+                button_4 = pygame.draw.ellipse(win, (45, 130, 227), pygame.Rect(800, 455, 150, 75))
+                button_5 = pygame.draw.ellipse(win, (212, 205, 4), pygame.Rect(175, 555, 150, 75))
+                button_6 = pygame.draw.ellipse(win, (227, 144, 20), pygame.Rect(425, 555, 150, 75))
+                button_7 = pygame.draw.ellipse(win, (181, 30, 16), pygame.Rect(675, 555, 150, 75))
+
+                draw_text('3x3', button_font, (255, 255, 255), win, 100, 470)
+                draw_text('4x4', button_font, (255, 255, 255), win, 350, 470)
+                draw_text('5x5', button_font, (255, 255, 255), win, 600, 470)
+                draw_text('6x6', button_font, (255, 255, 255), win, 850, 470)
+                draw_text('7x7', button_font, (255, 255, 255), win, 225, 570)
+                draw_text('8x8', button_font, (255, 255, 255), win, 475, 570)
+                draw_text('9x9', button_font, (255, 255, 255), win, 725, 570)
                 size = 4
                 button_2 = pygame.draw.ellipse(win, (0, 0, 0), pygame.Rect(300, 455, 150, 75))
                 draw_text('4x4', button_font, (255, 255, 255), win, 350, 470)
         if button_3.collidepoint((mx, my)):
             if click[0]:
+                button_1 = pygame.draw.ellipse(win, (189, 15, 111), pygame.Rect(50, 455, 150, 75))
+                button_2 = pygame.draw.ellipse(win, (7, 168, 20), pygame.Rect(300, 455, 150, 75))
+                button_3 = pygame.draw.ellipse(win, (10, 73, 145), pygame.Rect(550, 455, 150, 75))
+                button_4 = pygame.draw.ellipse(win, (45, 130, 227), pygame.Rect(800, 455, 150, 75))
+                button_5 = pygame.draw.ellipse(win, (212, 205, 4), pygame.Rect(175, 555, 150, 75))
+                button_6 = pygame.draw.ellipse(win, (227, 144, 20), pygame.Rect(425, 555, 150, 75))
+                button_7 = pygame.draw.ellipse(win, (181, 30, 16), pygame.Rect(675, 555, 150, 75))
+
+                draw_text('3x3', button_font, (255, 255, 255), win, 100, 470)
+                draw_text('4x4', button_font, (255, 255, 255), win, 350, 470)
+                draw_text('5x5', button_font, (255, 255, 255), win, 600, 470)
+                draw_text('6x6', button_font, (255, 255, 255), win, 850, 470)
+                draw_text('7x7', button_font, (255, 255, 255), win, 225, 570)
+                draw_text('8x8', button_font, (255, 255, 255), win, 475, 570)
+                draw_text('9x9', button_font, (255, 255, 255), win, 725, 570)
                 size = 5
                 button_3 = pygame.draw.ellipse(win, (0, 0, 0), pygame.Rect(550, 455, 150, 75))
                 draw_text('5x5', button_font, (255, 255, 255), win, 600, 470)
         if button_4.collidepoint((mx, my)):
             if click[0]:
+                button_1 = pygame.draw.ellipse(win, (189, 15, 111), pygame.Rect(50, 455, 150, 75))
+                button_2 = pygame.draw.ellipse(win, (7, 168, 20), pygame.Rect(300, 455, 150, 75))
+                button_3 = pygame.draw.ellipse(win, (10, 73, 145), pygame.Rect(550, 455, 150, 75))
+                button_4 = pygame.draw.ellipse(win, (45, 130, 227), pygame.Rect(800, 455, 150, 75))
+                button_5 = pygame.draw.ellipse(win, (212, 205, 4), pygame.Rect(175, 555, 150, 75))
+                button_6 = pygame.draw.ellipse(win, (227, 144, 20), pygame.Rect(425, 555, 150, 75))
+                button_7 = pygame.draw.ellipse(win, (181, 30, 16), pygame.Rect(675, 555, 150, 75))
+
+                draw_text('3x3', button_font, (255, 255, 255), win, 100, 470)
+                draw_text('4x4', button_font, (255, 255, 255), win, 350, 470)
+                draw_text('5x5', button_font, (255, 255, 255), win, 600, 470)
+                draw_text('6x6', button_font, (255, 255, 255), win, 850, 470)
+                draw_text('7x7', button_font, (255, 255, 255), win, 225, 570)
+                draw_text('8x8', button_font, (255, 255, 255), win, 475, 570)
+                draw_text('9x9', button_font, (255, 255, 255), win, 725, 570)
                 size = 6
                 button_4 = pygame.draw.ellipse(win, (0, 0, 0), pygame.Rect(800, 455, 150, 75))
                 draw_text('6x6', button_font, (255, 255, 255), win, 850, 470)
         if button_5.collidepoint((mx, my)):
             if click[0]:
+                button_1 = pygame.draw.ellipse(win, (189, 15, 111), pygame.Rect(50, 455, 150, 75))
+                button_2 = pygame.draw.ellipse(win, (7, 168, 20), pygame.Rect(300, 455, 150, 75))
+                button_3 = pygame.draw.ellipse(win, (10, 73, 145), pygame.Rect(550, 455, 150, 75))
+                button_4 = pygame.draw.ellipse(win, (45, 130, 227), pygame.Rect(800, 455, 150, 75))
+                button_5 = pygame.draw.ellipse(win, (212, 205, 4), pygame.Rect(175, 555, 150, 75))
+                button_6 = pygame.draw.ellipse(win, (227, 144, 20), pygame.Rect(425, 555, 150, 75))
+                button_7 = pygame.draw.ellipse(win, (181, 30, 16), pygame.Rect(675, 555, 150, 75))
+
+                draw_text('3x3', button_font, (255, 255, 255), win, 100, 470)
+                draw_text('4x4', button_font, (255, 255, 255), win, 350, 470)
+                draw_text('5x5', button_font, (255, 255, 255), win, 600, 470)
+                draw_text('6x6', button_font, (255, 255, 255), win, 850, 470)
+                draw_text('7x7', button_font, (255, 255, 255), win, 225, 570)
+                draw_text('8x8', button_font, (255, 255, 255), win, 475, 570)
+                draw_text('9x9', button_font, (255, 255, 255), win, 725, 570)
                 size = 7
                 button_5 = pygame.draw.ellipse(win, (0, 0, 0), pygame.Rect(175, 555, 150, 75))
                 draw_text('7x7', button_font, (255, 255, 255), win, 225, 570)
         if button_6.collidepoint((mx, my)):
             if click[0]:
+                button_1 = pygame.draw.ellipse(win, (189, 15, 111), pygame.Rect(50, 455, 150, 75))
+                button_2 = pygame.draw.ellipse(win, (7, 168, 20), pygame.Rect(300, 455, 150, 75))
+                button_3 = pygame.draw.ellipse(win, (10, 73, 145), pygame.Rect(550, 455, 150, 75))
+                button_4 = pygame.draw.ellipse(win, (45, 130, 227), pygame.Rect(800, 455, 150, 75))
+                button_5 = pygame.draw.ellipse(win, (212, 205, 4), pygame.Rect(175, 555, 150, 75))
+                button_6 = pygame.draw.ellipse(win, (227, 144, 20), pygame.Rect(425, 555, 150, 75))
+                button_7 = pygame.draw.ellipse(win, (181, 30, 16), pygame.Rect(675, 555, 150, 75))
+
+                draw_text('3x3', button_font, (255, 255, 255), win, 100, 470)
+                draw_text('4x4', button_font, (255, 255, 255), win, 350, 470)
+                draw_text('5x5', button_font, (255, 255, 255), win, 600, 470)
+                draw_text('6x6', button_font, (255, 255, 255), win, 850, 470)
+                draw_text('7x7', button_font, (255, 255, 255), win, 225, 570)
+                draw_text('8x8', button_font, (255, 255, 255), win, 475, 570)
+                draw_text('9x9', button_font, (255, 255, 255), win, 725, 570)
                 size = 8
                 button_6 = pygame.draw.ellipse(win, (0, 0, 0), pygame.Rect(425, 555, 150, 75))
                 draw_text('8x8', button_font, (255, 255, 255), win, 475, 570)
         if button_7.collidepoint((mx, my)):
             if click[0]:
+                button_1 = pygame.draw.ellipse(win, (189, 15, 111), pygame.Rect(50, 455, 150, 75))
+                button_2 = pygame.draw.ellipse(win, (7, 168, 20), pygame.Rect(300, 455, 150, 75))
+                button_3 = pygame.draw.ellipse(win, (10, 73, 145), pygame.Rect(550, 455, 150, 75))
+                button_4 = pygame.draw.ellipse(win, (45, 130, 227), pygame.Rect(800, 455, 150, 75))
+                button_5 = pygame.draw.ellipse(win, (212, 205, 4), pygame.Rect(175, 555, 150, 75))
+                button_6 = pygame.draw.ellipse(win, (227, 144, 20), pygame.Rect(425, 555, 150, 75))
+                button_7 = pygame.draw.ellipse(win, (181, 30, 16), pygame.Rect(675, 555, 150, 75))
+
+                draw_text('3x3', button_font, (255, 255, 255), win, 100, 470)
+                draw_text('4x4', button_font, (255, 255, 255), win, 350, 470)
+                draw_text('5x5', button_font, (255, 255, 255), win, 600, 470)
+                draw_text('6x6', button_font, (255, 255, 255), win, 850, 470)
+                draw_text('7x7', button_font, (255, 255, 255), win, 225, 570)
+                draw_text('8x8', button_font, (255, 255, 255), win, 475, 570)
+                draw_text('9x9', button_font, (255, 255, 255), win, 725, 570)
                 size = 9
                 button_7 = pygame.draw.ellipse(win, (0, 0, 0), pygame.Rect(675, 555, 150, 75))
                 draw_text('9x9', button_font, (255, 255, 255), win, 725, 570)
 
         if button_gen.collidepoint((mx, my)):
             if click[0]:
+                button_1 = pygame.draw.ellipse(win, (189, 15, 111), pygame.Rect(50, 455, 150, 75))
+                button_2 = pygame.draw.ellipse(win, (7, 168, 20), pygame.Rect(300, 455, 150, 75))
+                button_3 = pygame.draw.ellipse(win, (10, 73, 145), pygame.Rect(550, 455, 150, 75))
+                button_4 = pygame.draw.ellipse(win, (45, 130, 227), pygame.Rect(800, 455, 150, 75))
+                button_5 = pygame.draw.ellipse(win, (212, 205, 4), pygame.Rect(175, 555, 150, 75))
+                button_6 = pygame.draw.ellipse(win, (227, 144, 20), pygame.Rect(425, 555, 150, 75))
+                button_7 = pygame.draw.ellipse(win, (181, 30, 16), pygame.Rect(675, 555, 150, 75))
+
+                draw_text('3x3', button_font, (255, 255, 255), win, 100, 470)
+                draw_text('4x4', button_font, (255, 255, 255), win, 350, 470)
+                draw_text('5x5', button_font, (255, 255, 255), win, 600, 470)
+                draw_text('6x6', button_font, (255, 255, 255), win, 850, 470)
+                draw_text('7x7', button_font, (255, 255, 255), win, 225, 570)
+                draw_text('8x8', button_font, (255, 255, 255), win, 475, 570)
+                draw_text('9x9', button_font, (255, 255, 255), win, 725, 570)
                 cliques = puzzle_generation.generate(size)
                 draw(cliques, size)
 
@@ -126,9 +247,10 @@ def draw(cliques, size):
     win_2.fill(background_color)
     myfont = pygame.font.SysFont('Comic Sans MS', 180//size)
     button_font = pygame.font.SysFont('Comic Sans MS', 28)
+    myfont2 = pygame.font.SysFont('Comic Sans MS', 42)
 
-    draw_text('Select Solving', myfont, (0, 0, 0), win_2, 20, 50)
-    draw_text('Algorithm:', myfont, (0, 0, 0), win_2, 20, 110)
+    draw_text('Select Solving', myfont2, (0, 0, 0), win_2, 20, 50)
+    draw_text('Algorithm:', myfont2, (0, 0, 0), win_2, 20, 110)
 
     button_algo1 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 225, 350, 115))
     button_algo2 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 375, 350, 115))
@@ -166,31 +288,60 @@ def draw(cliques, size):
     pygame.display.update()
     ken = puzzle_generation.Kenken(size, cliques)
     but_pressed =0 
-    solved=False
+    solved=0
     while True : 
         mx, my = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
         if button_algo1.collidepoint((mx, my)):
-            if click[0] and  not solved:
+            if click[0] and solved==0:
+                button_algo1 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 225, 350, 115))
+                button_algo2 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 375, 350, 115))
+                button_algo3 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 525, 350, 115))
+
+                draw_text('Backtracking', button_font, (255, 255, 255), win_2, 140, 260)
+                draw_text('Backtracking with', button_font, (255, 255, 255), win_2, 110, 390)
+                draw_text('forward checking', button_font, (255, 255, 255), win_2, 110, 425)
+                draw_text('Backtracking with', button_font, (255, 255, 255), win_2, 110, 540)
+                draw_text('arc consistency', button_font, (255, 255, 255), win_2, 130, 575)
                 button_algo1 = pygame.draw.rect(win_2, (0, 0, 0), pygame.Rect(50, 225, 350, 115))
                 draw_text('Backtracking', button_font, (255, 255, 255), win_2, 140, 260)
                 but_pressed =1
+            
         if button_algo2.collidepoint((mx, my)):
-            if click[0] and not solved:
+            if click[0] and solved==0:
+                button_algo1 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 225, 350, 115))
+                button_algo2 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 375, 350, 115))
+                button_algo3 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 525, 350, 115))
+
+                draw_text('Backtracking', button_font, (255, 255, 255), win_2, 140, 260)
+                draw_text('Backtracking with', button_font, (255, 255, 255), win_2, 110, 390)
+                draw_text('forward checking', button_font, (255, 255, 255), win_2, 110, 425)
+                draw_text('Backtracking with', button_font, (255, 255, 255), win_2, 110, 540)
+                draw_text('arc consistency', button_font, (255, 255, 255), win_2, 130, 575)
                 button_algo2 = pygame.draw.rect(win_2, (0, 0, 0), pygame.Rect(50, 375, 350, 115))
                 draw_text('Backtracking with', button_font, (255, 255, 255), win_2, 110, 390)
                 draw_text('forward checking', button_font, (255, 255, 255), win_2, 110, 425)
                 but_pressed =2
         if button_algo3.collidepoint((mx, my)):
-            if click[0] and not solved:
+            if click[0] and solved==0:
+                button_algo1 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 225, 350, 115))
+                button_algo2 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 375, 350, 115))
+                button_algo3 = pygame.draw.rect(win_2, (95, 116, 161), pygame.Rect(50, 525, 350, 115))
+
+                draw_text('Backtracking', button_font, (255, 255, 255), win_2, 140, 260)
+                draw_text('Backtracking with', button_font, (255, 255, 255), win_2, 110, 390)
+                draw_text('forward checking', button_font, (255, 255, 255), win_2, 110, 425)
+                draw_text('Backtracking with', button_font, (255, 255, 255), win_2, 110, 540)
+                draw_text('arc consistency', button_font, (255, 255, 255), win_2, 130, 575)
                 button_algo3 = pygame.draw.rect(win_2, (0, 0, 0), pygame.Rect(50, 525, 350, 115))
                 draw_text('Backtracking with', button_font, (255, 255, 255), win_2, 110, 540)
                 draw_text('arc consistency', button_font, (255, 255, 255), win_2, 130, 575)
                 but_pressed =3
 
+
         if button_solve.collidepoint((mx, my)):
-            if click[0]:
+            if click[0] :
                 if but_pressed ==1:
                     assignments = backtracking.backtracking_search(ken)
                 elif but_pressed==2:
@@ -199,7 +350,7 @@ def draw(cliques, size):
                     assignments = backtracking.backtracking_search(ken, inference=backtracking.AC3)
                 for assignment in assignments.keys():
                     i =0 
-                    solved=True
+                    solved=1
                     for index in assignment:
                         myfont = pygame.font.SysFont('Comic Sans MS', 500//size)
                         value = myfont.render(str(assignments[assignment][i]), True, (0,0,0))
