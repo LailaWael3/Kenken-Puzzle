@@ -1,7 +1,5 @@
 import puzzle_generation as pg
-# import kenken_gui as kg
 import backtracking as bt
-import time
 
 
 def performace_analysis_generate(size):
