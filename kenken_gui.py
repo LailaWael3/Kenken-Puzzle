@@ -3,6 +3,8 @@ from inspect import trace
 from re import S
 from cv2 import solve
 import pygame, sys
+
+from sqlalchemy import false
 import puzzle_generation
 from random import randint
 import backtracking
@@ -265,6 +267,10 @@ def draw(cliques, size):
     button_solve = pygame.draw.rect(win_2, (75, 173, 73), pygame.Rect(130, 700, 200, 75))
     draw_text('Solve', button_font, (255, 255, 255), win_2, 195, 715)
 
+    button_font3 = pygame.font.SysFont('Comic Sans MS', 19)
+    button_solve8 = pygame.draw.rect(win_2, (75, 173, 73), pygame.Rect(130, 820, 200, 75))
+    draw_text('Generate New Board', button_font3, (255, 255, 255), win_2, 140, 835)
+
     x =0 
     w=((WIDTH-100)//size)
     for clique in cliques:
@@ -339,9 +345,9 @@ def draw(cliques, size):
                 draw_text('arc consistency', button_font, (255, 255, 255), win_2, 130, 575)
                 but_pressed =3
 
-
+        assignments={}
         if button_solve.collidepoint((mx, my)):
-            if click[0] :
+            if click[0] and solved==0:
                 if but_pressed ==1:
                     assignments = backtracking.backtracking_search(ken)
                 elif but_pressed==2:
@@ -357,8 +363,10 @@ def draw(cliques, size):
                         win_2.blit(value, ( ( (index[0]-1) *w )+470 +90//size , (((index[1]-1)*w )+(w//2) +size)) )
                         i+=1
                 but_pressed=0
-
                 
+        if button_solve8.collidepoint((mx, my)):
+            if click[0] :
+                init_win()
 
 
         pygame.display.update()
