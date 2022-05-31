@@ -286,7 +286,7 @@ def draw(cliques, size):
         win_2.blit(value, (( (index[0][0]-1) *w )+455 ,((index[0][1]-1)*w )+55 ))
         if op != '.':
             value = myfont.render(op, True, (0,0,0))
-            win_2.blit(value, ( ( (index[0][0]-1) *w )+475+ ((6*9)//size)*len(str(target) ) , ((index[0][1]-1)*w )+50 ))
+            win_2.blit(value, ( ( (index[0][0]-1) *w )+470+ ((8*9)//size)*len(str(target) ) , ((index[0][1]-1)*w )+50 ))
         
     for i in range(size+1):
         pygame.draw.line(win_2, (0,0,0), (450 +w*i, 50), (450 + w*i ,950 ), 2 )
