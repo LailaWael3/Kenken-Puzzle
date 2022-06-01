@@ -15,12 +15,6 @@ WIDTH = 1000
 original_grid_element_color = (52, 31, 151)
 background_color = (255,255,255)
 
-colors= []
-for r  in range(20 ,255 , 80):
-    for b  in range(0 ,255 , 80):
-        for g  in range(10,255 , 80):
-          colors.append((r,g,b))  
-
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
@@ -208,21 +202,6 @@ def init_win():
 
         if button_gen.collidepoint((mx, my)):
             if click[0]:
-                button_1 = pygame.draw.ellipse(win, (189, 15, 111), pygame.Rect(50, 455, 150, 75))
-                button_2 = pygame.draw.ellipse(win, (7, 168, 20), pygame.Rect(300, 455, 150, 75))
-                button_3 = pygame.draw.ellipse(win, (10, 73, 145), pygame.Rect(550, 455, 150, 75))
-                button_4 = pygame.draw.ellipse(win, (45, 130, 227), pygame.Rect(800, 455, 150, 75))
-                button_5 = pygame.draw.ellipse(win, (212, 205, 4), pygame.Rect(175, 555, 150, 75))
-                button_6 = pygame.draw.ellipse(win, (227, 144, 20), pygame.Rect(425, 555, 150, 75))
-                button_7 = pygame.draw.ellipse(win, (181, 30, 16), pygame.Rect(675, 555, 150, 75))
-
-                draw_text('3x3', button_font, (255, 255, 255), win, 100, 470)
-                draw_text('4x4', button_font, (255, 255, 255), win, 350, 470)
-                draw_text('5x5', button_font, (255, 255, 255), win, 600, 470)
-                draw_text('6x6', button_font, (255, 255, 255), win, 850, 470)
-                draw_text('7x7', button_font, (255, 255, 255), win, 225, 570)
-                draw_text('8x8', button_font, (255, 255, 255), win, 475, 570)
-                draw_text('9x9', button_font, (255, 255, 255), win, 725, 570)
                 cliques = puzzle_generation.generate(size)
                 draw(cliques, size)
 
@@ -242,6 +221,12 @@ def init_win():
                     click = True
 
 def draw(cliques, size):   
+    colors= []
+    for r  in range(20 ,255 , 80):
+        for b  in range(0 ,255 , 80):
+            for g  in range(10,255 , 80):
+                colors.append((r,g,b))  
+                
     mainClock = pygame.time.Clock() 
     pygame.init()
     win_2 = pygame.display.set_mode((1400, WIDTH))
