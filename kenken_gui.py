@@ -1,10 +1,4 @@
-
-from inspect import trace
-from re import S
-from cv2 import solve
 import pygame, sys
-
-from sqlalchemy import false
 import puzzle_generation
 from random import randint
 import backtracking
