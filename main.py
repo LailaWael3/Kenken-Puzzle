@@ -69,8 +69,8 @@ def performance_of_all_algorithms(size):
 
 if __name__ == "__main__":
 
-    size = 5
-    print(size)
+    size = int(input("Enter size: "))
+    print("Performance analysis on size:", size)
     performance_of_all_algorithms(size)
 
 
